@@ -4,89 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock, Paper, Scissors</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    
+    <h1>Rock, Paper, Scissors!</h1>
+    <div class="container">
+        <div id="rock">
+            <img src="./media/rock.png" alt="Image of a rock in a pixel art style" width="150em">
+        </div>
+        <div id="paper">
+            <img src="./media/paper.png" alt="Image of a piece of old paper in a pixel art style" width="150em">
+        </div>
+        <div id="scissors">
+            <img src="./media/scissors.png" alt="Image of a pair of pair of red scissors in a pixel art style" width="150em">
+        </div>
+    </div>
+
+    <script src="#"></script>
 </body>
 
-<script>
-    let computerScores = 0;
-    let humanScores = 0;
-
-    function playAround(humanChoice, computerChoice){
-            if(humanChoice === computerChoice){
-                console.log("Tie");
-            } else if(humanChoice === "rock" && computerChoice === "paper"){
-                console.log("Computer Wins");
-                computerScores++;
-            } else if(humanChoice === "rock" && computerChoice === "scissors"){
-                console.log("You're Winner!");
-                humanScores++;
-            } else if(humanChoice === "paper" && computerChoice === "rock"){
-                console.log("You're Winner!");
-                humanScores++;
-            } else if(humanChoice === "paper" && computerChoice === "scissors"){
-                console.log("Computer Wins");
-                computerScores++;
-            } else if(humanChoice === "scissors" && computerChoice === "rock"){
-                console.log("Computer Wins");
-                computerScores++;
-            } else if(humanChoice === "scissors" && computerChoice === "paper"){
-                console.log("You're Winner!");
-                humanScores++;
-            } else {
-                console.error();
-            }
-    }
-
-    function getHumanChoice(){
-        const humanChoice = prompt("Rock, Paper, Scissors!");
-
-        if(humanChoice === null){
-            alert("Invaid choice. Try again");
-        } else if(humanChoice === ""){
-            alert("Stop throwing the game!");
-        } else if(humanChoice.toLowerCase() === "rock"){
-            console.log(`humanChoice is ${humanChoice}`);
-            return "rock";
-        } else if(humanChoice.toLowerCase() === "paper"){
-            console.log(`humanChoice is ${humanChoice}`);
-            return "paper";
-        } else if(humanChoice.toLowerCase() === "scissors"){
-            console.log(`humanChoice is ${humanChoice}`);
-            return "scissors";
-        } else{
-            return humanChoice;
-        }
-    }
-
-    function getComputerChoice(){
-        const choices = ["rock", "paper", "scissors"];
-        const randomNumber = getRandomInt(0,3);
-        console.log(`computerChoice is ${choices[randomNumber]}`)
-        return computerChoice = choices[randomNumber];
-    }
-
-    function getRandomInt(min, max) {
-    const minCeiled = Math.ceil(min);
-    const maxFloored = Math.floor(max);
-    return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
-    }
-
-    function getState(computerScores, humanScores){
-        if(computerScores === 5){
-            console.log("YOU LOSE! GOOD DAY SIR!");
-            alert("The game is done, you can leave");
-        } else if(humanScores === 5){
-            console.log("YOU WIN");
-            alert("The game is done, you can leave");
-        }
-    }
-
-    while(computerScores <= 5 && humanScores <= 5){
-        playAround(getHumanChoice(),getComputerChoice());
-        console.log(`Current computer score is ${computerScores}, current human score is ${humanScores}`);
-        getState(computerScores, humanScores);
-    }
-</script>
 </html>
