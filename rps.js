@@ -1,5 +1,7 @@
     let computerScores = 0;
     let humanScores = 0;
+    let gameOver = false;
+
 
     const rockBtn = document.getElementById("rock");
     const paperBtn = document.getElementById("paper");
@@ -12,8 +14,9 @@
 
 
     function playGame(humanChoice) {
-        const computerChoice = getComputerChoice();
+        if (gameOver) return;
 
+        const computerChoice = getComputerChoice();
         const resultMessage = playAround(humanChoice, computerChoice);
 
         feedbackEl.textContent =
@@ -24,6 +27,7 @@
 
         getState(computerScores, humanScores);
     }
+
 
 
     rockBtn.addEventListener("click", () => playGame("rock"));
@@ -94,10 +98,10 @@
 
     function getState(computerScores, humanScores){
         if(computerScores === 5){
-            console.log("YOU LOSE! GOOD DAY SIR!");
-            alert("The game is done, you can leave");
+            feedbackEl.textContent += " Game over. You lose.";
+            gameOver = true;
         } else if(humanScores === 5){
-            console.log("YOU WIN");
-            alert("The game is done, you can leave");
+            feedbackEl.textContent += " Game over. You win!";
+            gameOver = true;
         }
     }
