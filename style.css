@@ -53,6 +53,12 @@ h1{
     border-color: blue;
 }
 
+#feedback{
+    display: flex;
+    font-size: 2rem;
+    justify-content: center;
+}
+
 .scoreboard{
     margin-top: 1em;
     border: 2px solid black;
