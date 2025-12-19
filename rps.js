@@ -39,14 +39,14 @@
         computerScoreEl.textContent = computerScores;
         playerScoreEl.textContent = humanScores;
 
-        if (isGameOver) return;
-
         rockBtn.classList.remove("lose", "win", "tie");
         paperBtn.classList.remove("lose", "win", "tie");
         scissorsBtn.classList.remove("lose", "win", "tie");
 
         const selectedDiv = document.getElementById(humanChoice);
 
+        if(isGameOver) return;
+        
         if (result.winner === "computer") {
             selectedDiv.classList.add("lose");
         } else if (result.winner === "human") {
