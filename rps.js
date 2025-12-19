@@ -10,6 +10,10 @@
     const computerScoreEl = document.getElementById("score-com");
     const playerScoreEl = document.getElementById("score-player");
     const feedbackEl = document.getElementById("feedback");
+    const playerChoiceEl = document.getElementById("player-choice");
+    const computerChoiceEl = document.getElementById("computer-choice");
+    const restartBtn = document.getElementById("restart");
+
 
 
 
@@ -17,17 +21,40 @@
         if (gameOver) return;
 
         const computerChoice = getComputerChoice();
-        const resultMessage = playAround(humanChoice, computerChoice);
+        const result = playAround(humanChoice, computerChoice);
 
-        feedbackEl.textContent =
-            `Computer chose ${computerChoice}. ${resultMessage}`;
+
+        playerChoiceEl.textContent = `Player: ${humanChoice}`;
+        computerChoiceEl.textContent = `Computer: ${computerChoice}`;
+
+
+        computerChoiceEl.classList.remove("computer-animate");
+        void computerChoiceEl.offsetWidth;
+        computerChoiceEl.classList.add("computer-animate");
+
+        feedbackEl.textContent = result.message;
+
 
         computerScoreEl.textContent = computerScores;
         playerScoreEl.textContent = humanScores;
 
+
+        rockBtn.classList.remove("lose", "win", "tie");
+        paperBtn.classList.remove("lose", "win", "tie");
+        scissorsBtn.classList.remove("lose", "win", "tie");
+
+        const selectedDiv = document.getElementById(humanChoice);
+
+        if (result.winner === "computer") {
+            selectedDiv.classList.add("lose");
+        } else if (result.winner === "human") {
+            selectedDiv.classList.add("win");
+        } else if (result.winner === "tie") {
+            selectedDiv.classList.add("tie");
+        }
+
         getState(computerScores, humanScores);
     }
-
 
 
     rockBtn.addEventListener("click", () => playGame("rock"));
@@ -36,30 +63,40 @@
 
 
     function playAround(humanChoice, computerChoice){
-        if(humanChoice === computerChoice){
-            return "Tie!";
-        } else if(humanChoice === "rock" && computerChoice === "paper"){
-            computerScores++;
-            return "Computer wins! Paper beats Rock.";
-        } else if(humanChoice === "rock" && computerChoice === "scissors"){
-            humanScores++;
-            return "You win! Rock beats Scissors.";
-        } else if(humanChoice === "paper" && computerChoice === "rock"){
-            humanScores++;
-            return "You win! Paper beats Rock.";
-        } else if(humanChoice === "paper" && computerChoice === "scissors"){
-            computerScores++;
-            return "Computer wins! Scissors beats Paper.";
-        } else if(humanChoice === "scissors" && computerChoice === "rock"){
-            computerScores++;
-            return "Computer wins! Rock beats Scissors.";
-        } else if(humanChoice === "scissors" && computerChoice === "paper"){
-            humanScores++;
-            return "You win! Scissors beats Paper.";
-        } else {
-            return "Invalid move.";
-        }
+    
+    if(humanChoice === computerChoice){
+        return { message: "It's a tie!", winner: "tie" };
+    } 
+    else if(humanChoice === "rock" && computerChoice === "paper"){
+        computerScores++;
+        return { message: "Paper covers rock!", winner: "computer" };
+    } 
+    else if(humanChoice === "rock" && computerChoice === "scissors"){
+        humanScores++;
+        return { message: "Rock bashes scissors!", winner: "human" };
+    } 
+    else if(humanChoice === "paper" && computerChoice === "rock"){
+        humanScores++;
+        return { message: "Paper covers rock!", winner: "human" };
+    } 
+    else if(humanChoice === "paper" && computerChoice === "scissors"){
+        computerScores++;
+        return { message: "Scissors shreds paper!", winner: "computer" };
+    } 
+    else if(humanChoice === "scissors" && computerChoice === "rock"){
+        computerScores++;
+        return { message: "Rock bashes scissors!", winner: "computer" };
+    } 
+    else if(humanChoice === "scissors" && computerChoice === "paper"){
+        humanScores++;
+        return { message: "Scissors shreds paper!", winner: "human" };
+    } 
+    else {
+        return { message: "How the hell did you trigger this?", winner: "none" };
     }
+}
+
+
 
 
     function getHumanChoice(){
@@ -70,13 +107,10 @@
         } else if(humanChoice === ""){
             alert("Stop throwing the game!");
         } else if(humanChoice.toLowerCase() === "rock"){
-            console.log(`humanChoice is ${humanChoice}`);
             return "rock";
         } else if(humanChoice.toLowerCase() === "paper"){
-            console.log(`humanChoice is ${humanChoice}`);
             return "paper";
         } else if(humanChoice.toLowerCase() === "scissors"){
-            console.log(`humanChoice is ${humanChoice}`);
             return "scissors";
         } else{
             return humanChoice;
@@ -86,7 +120,6 @@
     function getComputerChoice(){
         const choices = ["rock", "paper", "scissors"];
         const randomNumber = getRandomInt(0,3);
-        console.log(`computerChoice is ${choices[randomNumber]}`)
         return computerChoice = choices[randomNumber];
     }
 
@@ -100,8 +133,29 @@
         if(computerScores === 5){
             feedbackEl.textContent += " Game over. You lose.";
             gameOver = true;
-        } else if(humanScores === 5){
+            document.body.classList.add("game-over");
+        } 
+        else if(humanScores === 5){
             feedbackEl.textContent += " Game over. You win!";
             gameOver = true;
+            document.body.classList.add("game-over");
         }
     }
+
+
+    restartBtn.addEventListener("click", () => {
+    computerScores = 0;
+    humanScores = 0;
+    gameOver = false;
+
+    computerScoreEl.textContent = "0";
+    playerScoreEl.textContent = "0";
+
+    feedbackEl.textContent = "";
+    playerChoiceEl.textContent = "Player: —";
+    computerChoiceEl.textContent = "Computer: —";
+
+    rockBtn.classList.remove("lose", "win", "tie");
+    paperBtn.classList.remove("lose", "win", "tie");
+    scissorsBtn.classList.remove("lose", "win", "tie");
+});
