@@ -29,9 +29,6 @@ h1{
     border-radius: 10%;
 }
 
-#rock:hover{
-    border-color: #38bdf8;
-}
 
 #paper{
     border: 2px solid black;
@@ -39,18 +36,11 @@ h1{
     border-radius: 10%;
 }
 
-#paper:hover{
-    border-color: #38bdf8;
-}
 
 #scissors{
     border: 2px solid black;
     padding: 2%;
     border-radius: 10%;
-}
-
-#scissors:hover{
-    border-color: #38bdf8;
 }
 
 #rock,
@@ -67,6 +57,7 @@ h1{
 #scissors:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    border-color: #38bdf8;
 }
 
 @keyframes shake {
@@ -149,11 +140,6 @@ h1{
     margin-left: auto;
 }
 
-body.game-over * {
-    animation: none;
-    transition: none;
-}
-
 #restart{
     display: flex;
     margin: 2%;
@@ -174,4 +160,10 @@ body.game-over * {
     background-color: #0f172a;
     color: #e5e7eb;
     border-color: #e5e7eb;
+}
+
+body.game-over #rock,
+body.game-over #paper,
+body.game-over #scissors {
+    pointer-events: none;
 }

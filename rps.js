@@ -23,6 +23,7 @@
         const computerChoice = getComputerChoice();
         const result = playAround(humanChoice, computerChoice);
 
+        const isGameOver = getState(computerScores, humanScores);
 
         playerChoiceEl.textContent = `Player: ${humanChoice}`;
         computerChoiceEl.textContent = `Computer: ${computerChoice}`;
@@ -38,6 +39,7 @@
         computerScoreEl.textContent = computerScores;
         playerScoreEl.textContent = humanScores;
 
+        if (isGameOver) return;
 
         rockBtn.classList.remove("lose", "win", "tie");
         paperBtn.classList.remove("lose", "win", "tie");
@@ -52,8 +54,10 @@
         } else if (result.winner === "tie") {
             selectedDiv.classList.add("tie");
         }
-
-        getState(computerScores, humanScores);
+        
+        computerChoiceEl.classList.remove("computer-animate");
+        void computerChoiceEl.offsetWidth;
+        computerChoiceEl.classList.add("computer-animate");
     }
 
 
@@ -134,12 +138,15 @@
             feedbackEl.textContent += " Game over. You lose.";
             gameOver = true;
             document.body.classList.add("game-over");
+            return true;
         } 
         else if(humanScores === 5){
             feedbackEl.textContent += " Game over. You win!";
             gameOver = true;
             document.body.classList.add("game-over");
+            return true;
         }
+        return false;
     }
 
 
@@ -158,4 +165,5 @@
     rockBtn.classList.remove("lose", "win", "tie");
     paperBtn.classList.remove("lose", "win", "tie");
     scissorsBtn.classList.remove("lose", "win", "tie");
+    document.body.classList.remove("game-over");
 });
